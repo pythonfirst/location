@@ -2,10 +2,21 @@
     <head>
         <meta charset="utf-8" />
         <title>移动端定位测试</title>
+        <style>
+          body {
+              text-align: center
+          }
+          #container {
+              margin-top: 20%;
+              font-size: 1.5em;
+          }
+        </style>
     </head>
     <body>
-        <p><button onclick="geoFindMe()">Show my location</button></p>
-        <div id="out"></div>
+        <div id="container">
+            <p><button style="width:200px; height: 60px; font-size: 1.2em;" onclick="geoFindMe()">点击获取定位</button></p>
+            <div id="out"></div>
+        </div>
         <script>
             function geoFindMe() {
                 var output = document.getElementById("out");
