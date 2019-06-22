@@ -25,6 +25,11 @@
                     output.innerHTML = "<p>您的浏览器不支持地理位置</p>";
                     return;
                 }
+                var options = {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                    };
 
                 function success(position) {
                     var latitude  = position.coords.latitude;
@@ -42,7 +47,7 @@
                         // console.log(Http.responseText)
                         let res = JSON.parse(Http.responseText)
                         console.log(res.regeocode.addressComponent.province)
-                        output.innerHTML = "<p>当前定位区县为：" + res.regeocode.addressComponent.province + res.regeocode.addressComponent.district + "</p>"
+                        output.innerHTML = "<p>当前定位区县为：" + res.regeocode.addressComponent.province + res.regeocode.addressComponent.city +  res.regeocode.addressComponent.district + "</p>"
                     }
 
 
@@ -55,7 +60,7 @@
 
                 output.innerHTML = "<p>Locating…</p>";
 
-                navigator.geolocation.getCurrentPosition(success, error);
+                navigator.geolocation.getCurrentPosition(success, error, options);
             }
         </script>
     </body>
