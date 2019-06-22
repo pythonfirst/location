@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>移动端定位测试</title>
+    </head>
+    <body>
+        <p><button onclick="geoFindMe()">Show my location</button></p>
+        <div id="out"></div>
+        <script>
+            function geoFindMe() {
+                var output = document.getElementById("out");
+
+                if (!navigator.geolocation){
+                    output.innerHTML = "<p>您的浏览器不支持地理位置</p>";
+                    return;
+                }
+
+                function success(position) {
+                    var latitude  = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+
+                    output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+
+                    response = "https://restapi.amap.com/v3/geocode/regeo?output=json&location=" + longitude + "," + latitude + "&key=b2b423076909abce35e84f1216f1a16a&radius=1000&extensions=all"
+
+                    const Http = new XMLHttpRequest();
+                    Http.open("GET", response);
+                    Http.send();
+
+                    Http.onreadystatechange =(e) => {
+                        // console.log(Http.responseText)
+                        let res = JSON.parse(Http.responseText)
+                        console.log(res.regeocode.addressComponent.province)
+                        output.innerHTML = "<p>当前定位区县为：" + res.regeocode.addressComponent.province + res.regeocode.addressComponent.district + "</p>"
+                    }
+
+
+                    // output.appendChild(img);
+                };
+
+                function error() {
+                    output.innerHTML = "无法获取您的位置";
+                };
+
+                output.innerHTML = "<p>Locating…</p>";
+
+                navigator.geolocation.getCurrentPosition(success, error);
+            }
+        </script>
+    </body>
+</html>
